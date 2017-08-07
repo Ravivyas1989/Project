@@ -1,0 +1,7 @@
+---
+applications:
+- name: GitProject
+  memory: 1024M
+  buildpack: java_buildpack
+#  routes:
+#  - route: http://GitProject.cfapps.io

@@ -1,6 +1,11 @@
 package com.reliable.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.List;
+
+import javax.servlet.http.HttpServlet;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,12 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import com.couchbase.client.deps.io.netty.handler.codec.http.HttpResponse;
 import com.reliable.model.Customer;
 import com.reliable.repository.CustomerRepo;
 
 @RestController
-public class ReliableController {
+public class ReliableController extends HttpServlet {
 
 	@Autowired
 	CustomerRepo rp;
@@ -47,7 +54,7 @@ public class ReliableController {
 		/*
 		 * ModelAndView mv = new ModelAndView("home"); mv.addObject("home");
 		 */
-		return new ModelAndView("redirect:" + "home");
+		return new ModelAndView("home");
 		// return "redirect:finalPage";
 	}
 
@@ -63,6 +70,20 @@ public class ReliableController {
 		ModelAndView mv = new ModelAndView("home");
 		return mv;
 	}
+	
+	@RequestMapping("/home")
+	public ModelAndView homes() {
+		System.out.println("display home");
+		ModelAndView mv = new ModelAndView("home");
+		return mv;
+	}
+
+	@RequestMapping("/delete/home")
+	public RedirectView dhome() {
+		System.out.println("display home delete/home method");
+//		ModelAndView mv = new ModelAndView("home");
+		return new RedirectView("/findall");
+	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/register")
 	@ResponseBody
@@ -72,10 +93,20 @@ public class ReliableController {
 		return mv;
 	}
 
+	/*
+	 * HttpResponse response;
+	 * 
+	 * @RequestMapping("/delete/.") public ModelAndView homeredirect() {
+	 * System.out.println("redirecting to home"); ModelAndView mv = new
+	 * ModelAndView("home"); return mv; }
+	 */
+
 	@RequestMapping(method = RequestMethod.DELETE, value = "/delete/{id}")
-	public void deleteCourse(@PathVariable Long id) {
+	public ModelAndView deleteCourse(@PathVariable Long id) {
 		System.out.println("deleting" + id);
 		rp.delete(id);
+		ModelAndView mv = new ModelAndView("redirect:home");
+		return new ModelAndView("redirect:home");
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/login")
@@ -83,20 +114,6 @@ public class ReliableController {
 	public ModelAndView login() {
 		System.out.println("display registration");
 		ModelAndView mv = new ModelAndView("login");
-		return mv;
-	}
-
-	@RequestMapping(value = "/home")
-	public ModelAndView homepage() {
-		System.out.println("hitting display method");
-		ModelAndView mv = new ModelAndView();
-		return mv;
-	}
-
-	@RequestMapping(value = "/greeting")
-	public ModelAndView greet() {
-		System.out.println("hitting display method");
-		ModelAndView mv = new ModelAndView();
 		return mv;
 	}
 
