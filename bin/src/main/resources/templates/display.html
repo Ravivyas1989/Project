@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- <%@page import="com.reliable.model.Customer"%> -->
+<!-- <%@page import="java.util.List"%> -->
+<!-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> -->
+
+<head>Sample Table
+</head>
+<body>
+	<table>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+			<th>Password</th>
+		</tr>
+		<tr th:each="list : ${list}">
+			<td th:text="${list.id}">ID</td>
+			<td th:text="${list.userName}">Name</td>
+			<td th:text="${list.userPassword}">Password</td>
+		</tr>
+	</table>
+	
+</body>
+</html>

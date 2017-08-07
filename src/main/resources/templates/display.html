@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- <%@page import="com.reliable.model.Customer"%> -->
+<!-- <%@page import="java.util.List"%> -->
+<!-- <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> -->
+
+<head>Sample Table
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th>Id</th>
+				<th>Name</th>
+				<th>Password</th>
+				<th>Delete</th>
+			</tr>
+			<tr th:each="list : ${list}">
+				<td th:text="${list.id}">ID</td>
+				<td th:text="${list.userName}">Name</td>
+				<td th:text="${list.userPassword}">Password</td>
+				<td>
+				<form th:action="@{'/delete/{id}'(id=${list.id})}" th:method="delete">
+					<input type="submit" value="Delete" />
+				</form>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
